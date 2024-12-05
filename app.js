@@ -15,26 +15,40 @@ import teacherRouter from './src/routes/teacher.routes.js'
 import evaluation_gradeRouter from './src/routes/evaluation_grade.routes.js'
 import academic_placeRouter from './src/routes/academic_place.routes.js'
 import reservartionRouter from './src/routes/reservation.routes.js'
-import {config} from './src/config/config.js'
+import { config } from './src/config/config.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 conexionDB();
 
+// Redirect HTTP to HTTPS in production environment
+if (process.env.NODE_ENV === 'production') {
+    app.use(function (req, res, next) {
+        if (req.headers['x-forwarded-proto'] !== 'https') {
+            return res.redirect('https://' + req.headers.host + req.url);
+        }
+        return next();
+    });
+}
+
+// CORS middleware
 app.use(cors({
-    origin: config.frontUrl,
-    credentials: true,
+    origin: config.frontUrl,  // Replace with your frontend URL
+    credentials: true,        // Allow cookies to be sent with requests
 }));
 
+// Middleware for cookie parsing and JSON body parsing
 app.use(cookieParser());
 app.use(express.json());
+
+// Define your routes here
 app.use('/api/users', userRoutes);
 app.use('/oauth', oauthRoutes);
 app.use('/api/roles', roleRoutes);
 app.use('/api/parents', parentRoutes);
-app.use('/api/gradeSections',gradeSectionRoutes);
-app.use('/api/subjects',subjectRoutes);
-app.use('/api/evaluations',evaluationRoutes);
+app.use('/api/gradeSections', gradeSectionRoutes);
+app.use('/api/subjects', subjectRoutes);
+app.use('/api/evaluations', evaluationRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/teachers', teacherRouter);
