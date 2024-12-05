@@ -69,11 +69,10 @@ export const handleOAuthCallback = async (req, res) => {
     // Set the token in a cookie
     res.cookie("token", jwtToken, {
       httpOnly: true,
-      secure: false, 
+      secure: true, 
       sameSite: "strict",
       maxAge:   60 * 60 * 1000, //1 hour
     });
-      res
      
   const frontendUrl = `${config.frontUrl}/googleload`;
    return res.redirect(frontendUrl);

@@ -34,6 +34,7 @@ if (process.env.NODE_ENV === 'production') {
 // CORS middleware
 app.use(cors({
     origin: config.frontUrl,  // Replace with your frontend URL
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,        // Allow cookies to be sent with requests
 }));
 
