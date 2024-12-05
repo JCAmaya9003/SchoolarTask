@@ -70,7 +70,7 @@ export const handleOAuthCallback = async (req, res) => {
     res.cookie("token", jwtToken, {
       httpOnly: true,
       secure: true, 
-      sameSite: "strict",
+      sameSite: "none",
       maxAge:   60 * 60 * 1000, //1 hour
     });
      

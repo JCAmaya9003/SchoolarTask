@@ -26,7 +26,7 @@ export const login = async (req, res) => {
       res.cookie('token', token, { 
         httpOnly: true,
         secure: true,
-        sameSite: "strict", // Restricts the cookie to same-site requests
+        sameSite: "none", // Restricts the cookie to same-site requests
       });
 
       return res.json({ message: 'Inicio de sesión exitoso', token });
